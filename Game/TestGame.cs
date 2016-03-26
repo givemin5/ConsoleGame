@@ -9,8 +9,7 @@ namespace Game
 {
     public class TestGame : CGame
     {
-        private Int32 m_ticks;
-        private Int32 m_lasttime;
+        private Boolean m_bkeydown = false;
 
         /// <summary>  
         /// 游戏初始化  
@@ -20,13 +19,11 @@ namespace Game
             //设置游戏标题  
             setTitle("遊戲框架測試");
             //设置游戏画面刷新率 每毫秒一次  
-            setUpdateRate(1000);
+            setUpdateRate(30);
             //设置光标隐藏  
             setCursorVisible(false);
 
             Console.WriteLine("遊戲初始化成功!");
-
-            m_lasttime = Environment.TickCount;
         }
 
         /// <summary>  
@@ -34,15 +31,7 @@ namespace Game
         /// </summary>  
         protected override void gameLoop()
         {
-            if (m_ticks++ < 15)
-            {
-                Console.WriteLine(string.Format("  遊戲運行中,第{0}禎,耗時{1}ms", m_ticks, Environment.TickCount - m_lasttime));
-                m_lasttime = Environment.TickCount;
-            }
-            else
-            {
-                setGameOver(true);
-            }
+
         }
 
         /// <summary>  
@@ -52,6 +41,56 @@ namespace Game
         {
             Console.WriteLine("遊戲結束!");
             Console.ReadLine();
+        }
+
+        protected override void gameKeyDown(CKeyboardEventArgs e)
+        {
+            if (!m_bkeydown)
+            {
+                Console.WriteLine("按下鍵：" + e.getKey());
+
+                m_bkeydown = true;
+            }
+
+            if (e.getKey() == CKeys.Escape)
+            {
+                setGameOver(true);
+            }
+        }
+
+        protected override void gameKeyUp(CKeyboardEventArgs e)
+        {
+            Console.WriteLine("釋放鍵：" + e.getKey());
+            m_bkeydown = false;
+        }
+
+        protected override void gameMouseAway(CMouseEventArgs e)
+        {
+            setTitle("游標離開了工作區!");
+        }
+
+        protected override void gameMouseDown(CMouseEventArgs e)
+        {
+            if (e.getKey() == CMouseButtons.Left)
+            {
+                Console.SetCursorPosition(15, 2);
+                Console.WriteLine("游標工作區座標：" + e.ToString() + "  " + e.getKey().ToString());
+            }
+            else if (e.getKey() == CMouseButtons.Right)
+            {
+                Console.SetCursorPosition(15, 3);
+                Console.WriteLine("游標工作區座標：" + e.ToString() + "  " + e.getKey().ToString());
+            }
+            else if (e.getKey() == CMouseButtons.Middle)
+            {
+                Console.SetCursorPosition(15, 4);
+                Console.WriteLine("游標工作區座標：" + e.ToString() + "  " + e.getKey().ToString());
+            }
+        }
+
+        protected override void gameMouseMove(CMouseEventArgs e)
+        {
+            setTitle("游標回到工作區!");
         }
     }
 }
