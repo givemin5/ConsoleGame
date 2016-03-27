@@ -53,6 +53,7 @@
     <Compile Include="CKeyboardEventArgs.cs" />
     <Compile Include="CMouse.cs" />
     <Compile Include="CMouseEventArgs.cs" />
+    <Compile Include="CPaintEventArgs.cs" />
     <Compile Include="ICGame.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

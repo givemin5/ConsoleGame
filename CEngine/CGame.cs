@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CGraphics;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -12,11 +13,10 @@ namespace CEngine
     {
 
         #region Api函数  
-
-        [DllImport("User32.dll")]
-        private static extern IntPtr FindWindow(String lpClassName, String lpWindowName);
-
-        #endregion
+        [DllImport("User32.dll")]  
+        private static extern IntPtr FindWindow(String lpClassName, String lpWindowName);  
+ 
+        #endregion  
 
         #region 字段  
 
@@ -54,7 +54,24 @@ namespace CEngine
         /// </summary>  
         private CKeyboard m_dc_keyboard;
 
-        #endregion
+
+        /// <summary>  
+        /// 绘图  
+        /// </summary>  
+        private CDraw m_draw;
+
+        /// <summary>  
+        /// 重绘事件委托  
+        /// </summary>  
+        /// <typeparam name="TEventArgs"></typeparam>  
+        /// <param name="e"></param>  
+        public delegate void PaintEventHandler<TEventArgs>(TEventArgs e);
+        /// <summary>  
+        /// 重绘事件  
+        /// </summary>  
+        private event PaintEventHandler<CPaintEventArgs> m_paint;
+
+#endregion
 
         #region 构造函数  
 
@@ -68,6 +85,7 @@ namespace CEngine
             m_hwnd = FindWindow(null, getTitle());
             m_dc_mouse = new CMouse(m_hwnd);
             m_dc_keyboard = new CKeyboard();
+            m_draw = new CDraw();
 
             //订阅鼠标事件  
             m_dc_mouse.addMouseMoveEvent(gameMouseMove);
@@ -77,6 +95,10 @@ namespace CEngine
             //订阅键盘事件  
             m_dc_keyboard.addKeyDownEvent(gameKeyDown);
             m_dc_keyboard.addKeyUpEvent(gameKeyUp);
+
+            //添加游戏重绘事件  
+            m_paint += new PaintEventHandler<CPaintEventArgs>(onRedraw);
+
         }
 
         #endregion
@@ -213,6 +235,21 @@ namespace CEngine
         }
 
         /// <summary>  
+        /// 游戏重绘，只在显式更新时才发生  
+        /// </summary>  
+        /// <param name="e"></param>  
+        protected virtual void onRedraw(CPaintEventArgs e)
+        {
+            //缺省是用背景颜色擦除指定区域  
+            m_draw.setDrawSymbol(CSymbol.DEFAULT);
+            m_draw.fillRect(e.getClientRect(), Console.BackgroundColor);
+        }
+        /// <summary>  
+        /// 游戏渲染  
+        /// </summary>  
+        /// <param name="draw"></param>  
+        protected abstract void gameDraw(CDraw draw);
+        /// <summary>  
         /// 游戏逻辑  
         /// </summary>  
         protected abstract void gameLoop();
@@ -295,6 +332,59 @@ namespace CEngine
 
         #endregion
 
+        #region 遊戲繪製
+        /// <summary>  
+        /// 获取控制台区域  
+        /// </summary>  
+        /// <returns></returns>  
+        protected CRect getClientRect()
+        {
+            return new CRect(Console.WindowLeft, Console.WindowTop, (Console.WindowWidth >> 1) - 1, Console.WindowHeight);
+        }
+
+        /// <summary>  
+        /// 获取绘图对象  
+        /// </summary>  
+        /// <returns></returns>  
+        protected CDraw getDraw()
+        {
+            return this.m_draw;
+        }
+
+        /// <summary>  
+        /// 响应重绘事件  
+        /// </summary>  
+        /// <param name="e"></param>  
+        private void onPaint(CPaintEventArgs e)
+        {
+            PaintEventHandler<CPaintEventArgs> temp = m_paint;
+
+            if (temp != null)
+            {
+                temp(e);
+            }
+        }
+
+        /// <summary>  
+        /// 更新操作导致重绘整个工作区  
+        /// </summary>  
+        protected void update()
+        {
+            CPaintEventArgs e = new CPaintEventArgs(getClientRect(), getDraw());
+            this.onPaint(e);
+        }
+
+        /// <summary>  
+        /// 更新操作导致重绘指定区域  
+        /// </summary>  
+        protected void update(CRect rect)
+        {
+            CPaintEventArgs e = new CPaintEventArgs(rect, getDraw());
+            this.onPaint(e);
+        }
+
+        #endregion
+
         #region 游戏启动接口  
 
         /// <summary>  
@@ -316,6 +406,9 @@ namespace CEngine
                 this.gameInput();
                 //游戏逻辑  
                 this.gameLoop();
+                //游戏渲染  
+                this.gameDraw(m_draw);
+
                 //保持一定的FPS  
                 while (Environment.TickCount - startTime < this.m_updateRate)
                 {

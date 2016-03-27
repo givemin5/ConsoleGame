@@ -57,6 +57,10 @@
       <Project>{c240c4cd-b1bd-4496-9fa8-692f3b7beef9}</Project>
       <Name>CEngine</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CGraphics\CGraphics.csproj">
+      <Project>{ea06671e-527b-435e-a7b6-5cb7a0950471}</Project>
+      <Name>CGraphics</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,4 +1,5 @@
 ﻿using CEngine;
+using CGraphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -91,6 +92,11 @@ namespace Game
         protected override void gameMouseMove(CMouseEventArgs e)
         {
             setTitle("游標回到工作區!");
+        }
+
+        protected override void gameDraw(CDraw draw)
+        {
+            throw new NotImplementedException();
         }
     }
 }
