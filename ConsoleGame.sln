@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CRun", "CRun\CRun.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CGraphics", "CGraphics\CGraphics.csproj", "{EA06671E-527B-435E-A7B6-5CB7A0950471}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snake", "Snake\Snake.csproj", "{042AD7F7-3F94-403D-9F6A-72FE6ED51363}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{EA06671E-527B-435E-A7B6-5CB7A0950471}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EA06671E-527B-435E-A7B6-5CB7A0950471}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EA06671E-527B-435E-A7B6-5CB7A0950471}.Release|Any CPU.Build.0 = Release|Any CPU
+		{042AD7F7-3F94-403D-9F6A-72FE6ED51363}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{042AD7F7-3F94-403D-9F6A-72FE6ED51363}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{042AD7F7-3F94-403D-9F6A-72FE6ED51363}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{042AD7F7-3F94-403D-9F6A-72FE6ED51363}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

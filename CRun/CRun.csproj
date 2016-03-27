@@ -62,6 +62,10 @@
       <Project>{2db2f7b3-cd9c-4161-80b6-aab77740fab8}</Project>
       <Name>Game</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Snake\Snake.csproj">
+      <Project>{042ad7f7-3f94-403d-9f6a-72fe6ed51363}</Project>
+      <Name>Snake</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
