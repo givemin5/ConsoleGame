@@ -54,6 +54,10 @@
       <Project>{c240c4cd-b1bd-4496-9fa8-692f3b7beef9}</Project>
       <Name>CEngine</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CGraphics\CGraphics.csproj">
+      <Project>{ea06671e-527b-435e-a7b6-5cb7a0950471}</Project>
+      <Name>CGraphics</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Game\Game.csproj">
       <Project>{2db2f7b3-cd9c-4161-80b6-aab77740fab8}</Project>
       <Name>Game</Name>

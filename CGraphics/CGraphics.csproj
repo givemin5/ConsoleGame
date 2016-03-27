@@ -40,7 +40,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CDraw.cs" />
+    <Compile Include="CMatrix.cs" />
     <Compile Include="CPoint.cs" />
+    <Compile Include="CRect.cs" />
+    <Compile Include="CSize.cs" />
+    <Compile Include="CSymbolHelper.cs" />
+    <Compile Include="CText.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
